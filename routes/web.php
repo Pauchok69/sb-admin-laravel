@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/charts', 'ChartsController@index')->name('charts');
+Route::get('/tables', 'TablesController@index')->name('tables');
+Route::get('/components/navbar', 'NavbarController@index')->name('components_navbar');
+Route::get('/components/cards', 'CardsController@index')->name('components_cards');
+Route::view('/404', 'errors.404');

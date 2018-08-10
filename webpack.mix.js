@@ -12,4 +12,10 @@ let mix = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+   .sass('resources/assets/sass/app.scss', 'public/css')
+//    .sass('node_modules/bootstrap/scss/bootstrap.scss', 'public/css/sb_admin')
+//    .sass('resources/assets/sass/fontawesome.scss', 'public/css/sb_admin');
+//
+// mix.js('node_modules/datatables.net/js/*.js', 'public/js/sb_admin')
+//     .js('node_modules/datatables.net-bs4/js/*.js', 'public/js/sb_admin')
+//     .stylus('node_modules/datatables.net-bs4/css/*.css', 'public/css/sb_admin');
