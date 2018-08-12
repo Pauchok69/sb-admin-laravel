@@ -28,10 +28,10 @@ Route::middleware('auth')->group(
     }
 );
 //Route::view('/404', 'errors.404');
-Route::get(
+Route::post(
     '/logout', function () {
     Auth::logout();
 
     return redirect('/home');
 }
-);
+)->name('logout');
