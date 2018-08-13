@@ -10,15 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+$role = "editor";
 
 Auth::routes();
 
 Route::middleware('auth')->group(
     function () {
-        Route::get('/', 'HomeController@index')->name('home');
+        Route::get('/', 'HomeController@index')->name('home')->middleware('check.roles: super_admin');
         Route::get('/home', 'HomeController@index')->name('home');
-        Route::get('/dashboard', 'HomeController@index')->name('home');
+        Route::get('/dashboard', 'HomeController@index')->name('home')->middleware('check.role:super_admin,user');
         Route::get('/charts', 'ChartsController@index')->name('charts');
         Route::get('/tables', 'TablesController@index')->name('tables');
         Route::get('/components/navbar', 'NavbarController@index')
@@ -27,11 +27,11 @@ Route::middleware('auth')->group(
             ->name('components_cards');
     }
 );
-//Route::view('/404', 'errors.404');
 Route::post(
-    '/logout', function () {
-    Auth::logout();
+    '/logout',
+    function () {
+        Auth::logout();
 
-    return redirect('/home');
-}
+        return redirect('/home');
+    }
 )->name('logout');

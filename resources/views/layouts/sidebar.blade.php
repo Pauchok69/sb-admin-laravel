@@ -5,11 +5,13 @@
             <span>Dashboard</span>
         </a>
     </li>
+    @can('charts.view')
     <li class="nav-item">
         <a class="nav-link" href="{{route('charts')}}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Charts</span></a>
     </li>
+    @endcan
     <li class="nav-item">
         <a class="nav-link" href="{{route('tables')}}">
             <i class="fas fa-fw fa-table"></i>

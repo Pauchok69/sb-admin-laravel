@@ -12,6 +12,8 @@ class ChartsController extends Controller
      */
     public function index()
     {
+        $this->authorize('charts.view');
+
         return view('charts');
     }
 }
