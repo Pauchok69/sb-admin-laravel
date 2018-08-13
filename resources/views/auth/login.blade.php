@@ -9,37 +9,34 @@
                 {{csrf_field()}}
 
                 <div class="form-group">
-                    <div class="form-label-group">
-                        <input type="email" id="email"
-                               class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
-                               placeholder="Email address" required autofocus>
-                        <label for="email" class="control-label">Email address</label>
+                    <input type="email" id="email"
+                           class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
+                           placeholder="Email address" required autofocus>
+                    <label for="email" class="control-label sr-only">Email address</label>
 
-                        @if ($errors->has('email'))
-                            <span class="invalid-feedback">
+                    @if ($errors->has('email'))
+                        <span class="invalid-feedback">
                                 <strong>{{ $errors->first('email') }}</strong>
                             </span>
-                        @endif
-                    </div>
+                    @endif
                 </div>
                 <div class="form-group">
-                    <div class="form-label-group">
-                        <input type="password" id="password" name="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                               placeholder="Password"
-                               required="required">
-                        <label for="password" class="control-label">Password</label>
+                    <input type="password" id="password" name="password"
+                           class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                           placeholder="Password"
+                           required="required">
+                    <label for="password" class="control-label sr-only">Password</label>
 
-                        @if ($errors->has('password'))
-                            <span class="invalid-feedback">
+                    @if ($errors->has('password'))
+                        <span class="invalid-feedback">
                                 <strong>{{ $errors->first('password') }}</strong>
                             </span>
-                        @endif
-                    </div>
+                    @endif
                 </div>
                 <div class="form-group">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                            <input type="checkbox" name="remember">
                             Remember Password
                         </label>
                     </div>
