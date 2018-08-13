@@ -35,4 +35,24 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function isSuperAdmin()
+    {
+        return $this->role == Role::where('name', 'super_admin')->first();
+    }
+
+    public function isAdmin()
+    {
+        return $this->role == Role::where('name', 'admin')->first();
+    }
+
+    public function isUser()
+    {
+        return $this->role == Role::where('name', 'user')->first();
+    }
+
+    public function isManager()
+    {
+        return $this->role == Role::where('name', 'manager')->first();
+    }
 }

@@ -12,6 +12,7 @@ class TablesController extends Controller
      */
     public function index()
     {
+        $this->authorize('tables.view');
         return view('tables');
     }
 }

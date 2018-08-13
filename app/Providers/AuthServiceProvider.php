@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Role;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -28,13 +29,23 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define(
-            'charts.view', function ($role) {
-            return Auth::user()->role == Role::where('name', 'admin')->first();
+            'charts.view', function (User $user) {
+            return !$user->isManager() && !$user->isUser();
         }
         );
         Gate::define(
-            'tables.view', function () {
-            return Auth::user()->role == Role::where('name', 'admin')->first();
+            'tables.view', function (User $user) {
+            return !$user->isAdmin() && !$user->isUser();
+        }
+        );
+        Gate::define(
+            'dashboard.view', function (User $user) {
+            return !$user->isManager() && !$user->isUser();
+        }
+        );
+        Gate::define(
+            'components.view', function (User $user) {
+            return !$user->isManager();
         }
         );
     }

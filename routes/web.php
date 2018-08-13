@@ -16,9 +16,9 @@ Auth::routes();
 
 Route::middleware('auth')->group(
     function () {
-        Route::get('/', 'HomeController@index')->name('home')->middleware('check.roles: super_admin');
+        Route::get('/', 'HomeController@index')->name('home');
         Route::get('/home', 'HomeController@index')->name('home');
-        Route::get('/dashboard', 'HomeController@index')->name('home')->middleware('check.role:super_admin,user');
+        Route::get('/dashboard', 'HomeController@index')->name('home');
         Route::get('/charts', 'ChartsController@index')->name('charts');
         Route::get('/tables', 'TablesController@index')->name('tables');
         Route::get('/components/navbar', 'NavbarController@index')
