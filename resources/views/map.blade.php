@@ -4,11 +4,16 @@
 
 @section('content')
     <style>
-        #map {
-            min-height: 60%;
+        /* Set the size of the div element that contains the map */
+        #map-canvas {
+            height: 60%; /* The height is 400 pixels */
+            width: 100%; /* The width is the width of the web page */
+        }
+        body {
+            height: 900px;
         }
     </style>
-    <div class="container-fluid" style="height: 500px">
+    <div class="container-fluid">
 
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
@@ -46,7 +51,9 @@
                                             <button type="submit" class="btn btn-primary">Create marker</button>
                                         </div>
                                         <div class="form-group col-3">
-                                            <button id="clearAllMarkers" type="button" class="btn btn-danger">Clear all markers</button>
+                                            <button id="clearAllMarkers" type="button" class="btn btn-danger">Clear all
+                                                markers
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
@@ -54,7 +61,8 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <div id="map-canvas" style="height: 100%;"></div>
+
+                                <div id="map-canvas"></div>
                             </div>
                         </div>
                     </div>
@@ -72,5 +80,5 @@
     <script src="{{ asset('js/map.js') }}"></script>
 
 @endsection
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7xUNKXP-6uXwCJytOULJJs8TaqY6-1AQ"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7xUNKXP-6uXwCJytOULJJs8TaqY6-1AQ&width=675&height=400"
         async defer></script>
