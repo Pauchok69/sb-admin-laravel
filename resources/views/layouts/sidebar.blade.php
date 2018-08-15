@@ -24,9 +24,15 @@
         </li>
     @endcan
 
+        <li class="nav-item{{ request()->fullUrl() == route('map.index') ? ' active' : '' }}">
+            <a class="nav-link" href="{{route('map.index')}}">
+                <i class="fas fa-fw fa-map"></i>
+                <span>Map</span></a>
+        </li>
+
     @can('components.view')
         <li class="nav-item dropdown
-{{ request()->fullUrl() == route('components_cards') || request()->fullUrl() == route('components_navbar') ? ' active' : '' }} }} ">
+{{ request()->fullUrl() == route('components_cards') || request()->fullUrl() == route('components_navbar') ? ' active' : '' }}">
             <a class="nav-link dropdown-toggle" href="#" id="componentsDropDown" role="button" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-fw fa-folder"></i>
@@ -38,4 +44,5 @@
             </div>
         </li>
     @endcan
+
 </ul>

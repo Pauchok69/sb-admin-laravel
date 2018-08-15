@@ -48,5 +48,10 @@ class AuthServiceProvider extends ServiceProvider
             return !$user->isManager();
         }
         );
+        Gate::define(
+            'mapMarker.create', function (User $user) {
+            return !$user->isManager() && !$user->isUser();
+        }
+        );
     }
 }

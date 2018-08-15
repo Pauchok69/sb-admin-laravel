@@ -36,14 +36,17 @@
                             <div class="col-md-6">
                                 <form id="setMarker">
                                     <div class="form-row">
-                                        <div class="form-group col-8">
+                                        <div class="form-group col-6">
                                             <label for="address" class="sr-only"></label>
                                             <input id="address" class="form-control" type="text"
                                                    placeholder="Input address"
                                                    name="address">
                                         </div>
-                                        <div class="form-group col-4">
+                                        <div class="form-group col-3">
                                             <button type="submit" class="btn btn-primary">Create marker</button>
+                                        </div>
+                                        <div class="form-group col-3">
+                                            <button id="clearAllMarkers" type="button" class="btn btn-danger">Clear all markers</button>
                                         </div>
                                     </div>
                                 </form>
@@ -69,5 +72,5 @@
     <script src="{{ asset('js/map.js') }}"></script>
 
 @endsection
-<script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_API_KEY') }}"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC7xUNKXP-6uXwCJytOULJJs8TaqY6-1AQ"
         async defer></script>

@@ -1,6 +1,7 @@
 let geocoder;
 let map;
 let infoWindow;
+let markersArr = [];
 
 $(document).ready(function () {
     initMap();
@@ -10,6 +11,10 @@ $(document).ready(function () {
 $(document).on('submit', '#setMarker', function (evt) {
     evt.preventDefault();
     codeAddress();
+});
+
+$(document).on('click', '#clearAllMarkers', function (evt) {
+    deleteAllMarkers();
 });
 
 /*******************************************************************************/
@@ -37,11 +42,7 @@ function showMarkers(map) {
         let address = markerElem.address;
         let point   = latLng;
 
-        let marker = new google.maps.Marker({
-            map     : map,
-            position: point
-        });
-
+        let marker = showMarker(name, address, point);
         createMarkerInfoWindow(marker, name, address);
     });
 }
@@ -52,9 +53,9 @@ function showMarkers(map) {
 function initMap() {
     geocoder       = new google.maps.Geocoder();
     infoWindow     = new google.maps.InfoWindow;
-    let latlng     = new google.maps.LatLng(-34.397, 150.644);
+    let latlng     = new google.maps.LatLng(0, 0);
     let mapOptions = {
-        zoom     : 8,
+        zoom     : 2,
         center   : latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
@@ -71,15 +72,8 @@ function codeAddress() {
             map.setCenter(results[0].geometry.location);
             let name    = input_address;
             let address = results[0].formatted_address;
-            let lat     = results[0].geometry.location.lat();
-            let lng     = results[0].geometry.location.lng();
-            let marker  = new google.maps.Marker({
-                map     : map,
-                position: results[0].geometry.location
-            });
 
-            saveMarker(name, address, lat, lng);
-            createMarkerInfoWindow(marker, name, address);
+            saveMarker(name, address, results[0].geometry.location);
         } else {
             showError('Geocode was not successful for the following reason: ' + status);
         }
@@ -132,7 +126,35 @@ function createMarkerInfoWindow(marker, name, address) {
     return;
 }
 
-function saveMarker(name, address, lat, lng) {
+/**
+ * Show marker on map
+ *
+ * @param name
+ * @param address
+ * @param point
+ * @returns {google.maps.Marker}
+ */
+function showMarker(name, address, point) {
+    let marker = new google.maps.Marker({
+        map     : map,
+        position: point
+    });
+    markersArr.push(marker);
+
+    return marker;
+}
+
+/**
+ * Save markers to DB
+ *
+ * @param name
+ * @param address
+ * @param location
+ */
+function saveMarker(name, address, location) {
+    let lat = location.lat();
+    let lng = location.lng();
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -140,7 +162,6 @@ function saveMarker(name, address, lat, lng) {
     });
 
     $.ajax({
-
         type    : 'POST',
         url     : '/map',
         data    : {
@@ -151,14 +172,46 @@ function saveMarker(name, address, lat, lng) {
         },
         dataType: 'json',
         success : function (data) {
-            console.log(data);
+            let marker = showMarker(name, address, location);
+            createMarkerInfoWindow(marker, name, address);
         },
         error   : function (data) {
-            console.log('Error:', data);
+            console.log(data);
+            showError(data.responseJSON.message);
         }
     });
 }
 
+/**
+ * Init ajax for deleting markers from db and init clear markers from the map
+ */
 function deleteAllMarkers() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        }
+    });
 
+    $.ajax({
+        type    : 'DELETE',
+        url     : '/map/all',
+        dataType: 'json',
+        success : function (data) {
+            clearMarkers();
+        },
+        error   : function (data) {
+            console.log(data);
+            showError(data.responseJSON.message);
+        }
+    });
+}
+
+/**
+ * Clear all markers from the nap
+ */
+function clearMarkers() {
+    for (var i = 0; i < markersArr.length; i++) {
+        markersArr[i].setMap(null);
+    }
+    markersArr.length = 0;
 }
