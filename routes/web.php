@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-$role = "editor";
 
 Auth::routes();
 
@@ -25,6 +24,17 @@ Route::middleware('auth')->group(
             ->name('components_navbar');
         Route::get('/components/cards', 'CardsController@index')
             ->name('components_cards');
+        Route::resource(
+            '/map',
+            'MapController',
+            [
+                'except' => [
+                    'show',
+                    'create',
+                    'edit'
+                ]
+            ]
+        );
     }
 );
 Route::post(

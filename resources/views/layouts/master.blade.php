@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="_token" content="{{ csrf_token() }}"/>
 
     <title>My SB Admin - @yield('title')</title>
 
